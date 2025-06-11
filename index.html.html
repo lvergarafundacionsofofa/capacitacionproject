@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Capacitación: Project for the Web</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <!-- 
+    Chosen Palette: Corporate Blue & Slate
+    Application Structure Plan: The SPA has been redesigned as a sectioned, slide-based narrative to mirror a formal presentation structure. This addresses the need for a more comprehensive and ordered flow. Key interactions are focused on data visualization (the baseline chart) to make abstract concepts tangible.
+    Visualization & Content Choices: 
+    - Title/Agenda/Info Pages: Goal: Inform -> Viz: Styled HTML sections -> Justification: Clear, professional, and direct communication of core information.
+    - Tool Comparison: Goal: Compare -> Viz: Styled Feature List -> Justification: More direct and readable than a chart for qualitative feature comparison.
+    - Interfaces: Goal: Inform/Organize -> Viz: Tabbed-style cards (HTML/CSS) -> Justification: Allows users to explore each interface without cluttering the page.
+    - Baseline Tracking: Goal: Change -> Viz: Line Chart (Chart.js) -> Justification: Perfectly illustrates the comparison of planned vs. actual progress over time.
+    CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. 
+    -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f9fa;
+        }
+        .slide {
+            min-height: 95vh;
+            padding: 5rem 1rem;
+            border-bottom: 1px solid #dee2e6;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+        }
+        .slide-header {
+            width: 100%;
+            display: flex;
+            justify-content: flex-end;
+            padding: 1rem 2rem 0 0;
+            position: absolute;
+            top: 1rem;
+            right: 0;
+            z-index: 10;
+        }
+        .logo {
+             width: 150px;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 700px;
+            margin: 2rem auto 0 auto;
+            height: 400px;
+            max-height: 450px;
+        }
+        .decorative-shape {
+            position: absolute;
+            width: 350px;
+            height: 350px;
+            background-color: #3D4B5C;
+            clip-path: polygon(0 0, 100% 0, 0 100%);
+            z-index: 0;
+        }
+    </style>
+</head>
+<body class="text-[#3D4B5C]">
+
+    <!-- Portada -->
+    <section class="relative flex flex-col justify-center items-center text-center min-h-screen overflow-hidden bg-white">
+        <div class="absolute top-0 left-0 w-64 h-64 md:w-96 md:h-96 bg-[#3D4B5C]" style="clip-path: polygon(0 0, 100% 0, 0 100%)"></div>
+        <div class="absolute bottom-0 right-0 w-64 h-64 md:w-96 md:h-96 bg-[#007BFF]" style="clip-path: polygon(100% 100%, 100% 0, 0 100%)"></div>
+
+        <div class="absolute top-8 right-8 z-10">
+            <img src="logo_oscuro.png" alt="Logo SOFOFA" class="w-40 md:w-48">
+        </div>
+        
+        <div class="relative z-10 px-4">
+            <h1 class="text-4xl md:text-6xl font-black text-[#007BFF] max-w-2xl mx-auto">Introducción a Project for the Web</h1>
+            <div class="mt-12 text-xl space-y-2 text-gray-600">
+                <p><strong>Duración:</strong> 1.5 horas</p>
+                <p><strong>Objetivo:</strong> Comprender Project for the Web y explorar sus funcionalidades.</p>
+                <p><strong>Responsable:</strong> Área de Tecnología</p>
+            </div>
+        </div>
+    </section>
+
+    <div class="container mx-auto">
+        <!-- Agenda -->
+        <section id="agenda" class="relative slide">
+            <div class="slide-header"><img src="logo_oscuro.png" alt="Logo SOFOFA" class="logo"></div>
+            <h2 class="text-4xl font-bold text-center text-[#3D4B5C] mb-8">Agenda de la Capacitación</h2>
+            <div class="max-w-4xl mx-auto bg-white rounded-xl shadow-lg p-6 w-full">
+                <ul class="space-y-4 text-lg">
+                    <li><strong class="text-[#007BFF]">1.</strong> ¿Qué es Project for the Web?</li>
+                    <li><strong class="text-[#007BFF]">2.</strong> Comparativa de Herramientas: Planner vs. Project</li>
+                    <li><strong class="text-[#007BFF]">3.</strong> Conceptos Clave y Vistas Principales</li>
+                    <li><strong class="text-[#007BFF]">4.</strong> Explorando las Interfaces de Trabajo</li>
+                    <li><strong class="text-[#007BFF]">5.</strong> Ciclo de Vida de un Proyecto (Caso Práctico)</li>
+                    <li><strong class="text-[#007BFF]">6.</strong> El Poder de la Línea Base para el Seguimiento</li>
+                    <li><strong class="text-[#007BFF]">7.</strong> Buenas Prácticas y Recomendaciones</li>
+                    <li><strong class="text-[#007BFF]">8.</strong> Material de Apoyo y Próximos Pasos</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Qué es Project for the Web -->
+        <section id="que-es" class="relative slide">
+             <div class="slide-header"><img src="logo_oscuro.png" alt="Logo SOFOFA" class="logo"></div>
+            <h2 class="text-4xl font-bold text-center text-[#3D4B5C] mb-8">1. ¿Qué es Project for the Web?</h2>
+            <div class="max-w-4xl mx-auto bg-white rounded-xl shadow-lg p-8 w-full text-lg space-y-4">
+                <p>Es una herramienta de Microsoft 365 diseñada para gestionar proyectos de manera <strong>sencilla y visual</strong>.</p>
+                <ul class="list-disc list-inside space-y-2 pl-4">
+                    <li>Permite planificar tareas, asignarlas a personas y coordinar el trabajo entre equipos.</li>
+                    <li>Puedes trabajar con listas, tableros tipo Kanban y cronogramas (Gantt) desde el navegador.</li>
+                    <li>Se integra de forma nativa con herramientas como Microsoft Teams y Power BI para potenciar la colaboración y el análisis de datos.</li>
+                </ul>
+                <div class="text-center pt-4">
+                    <a href="https://project.microsoft.com" target="_blank" class="bg-[#007BFF] text-white font-bold py-2 px-6 rounded-lg hover:bg-blue-800 transition">Acceder a Project</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Comparativa -->
+        <section id="comparison" class="relative slide">
+            <div class="slide-header"><img src="logo_oscuro.png" alt="Logo SOFOFA" class="logo"></div>
+            <h2 class="text-4xl font-bold text-[#3D4B5C] mb-8 text-center">2. Planner vs. Project for the Web</h2>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-6xl mx-auto w-full">
+                <div class="bg-white rounded-xl p-6 shadow-lg border-t-4 border-gray-300">
+                    <h3 class="text-2xl font-bold text-center mb-4">Planner <span class="text-base font-normal text-gray-500">(Para Tareas Rápidas)</span></h3>
+                    <ul class="space-y-4"><li class="flex items-start gap-3"><span class="text-xl">✅</span> <div><strong>Vista Kanban:</strong> Sí</div></li><li class="flex items-start gap-3"><span class="text-xl">⚠️</span> <div><strong>Subtareas:</strong> Solo como checklist simple.</div></li><li class="flex items-start gap-3"><span class="text-xl">❌</span> <div><strong>Dependencias:</strong> No disponibles.</div></li><li class="flex items-start gap-3"><span class="text-xl">❌</span> <div><strong>Vista de Cronograma (Gantt):</strong> No disponible.</div></li><li class="flex items-start gap-3"><span class="text-xl">❌</span> <div><strong>Hitos (Milestones):</strong> No disponibles.</div></li><li class="flex items-start gap-3"><span class="text-xl">❌</span> <div><strong>Línea Base (Baseline):</strong> No disponible.</div></li></ul>
+                </div>
+                <div class="bg-white rounded-xl p-6 shadow-lg border-t-4 border-[#007BFF]">
+                    <h3 class="text-2xl font-bold text-center mb-4">Project for the Web <span class="text-base font-normal text-gray-500">(Para Proyectos Estructurados)</span></h3>
+                    <ul class="space-y-4"><li class="flex items-start gap-3"><span class="text-xl">✅</span> <div><strong>Vista Kanban:</strong> Sí</div></li><li class="flex items-start gap-3"><span class="text-xl">✅</span> <div><strong>Subtareas:</strong> Completas, para crear estructuras de trabajo.</div></li><li class="flex items-start gap-3"><span class="text-xl">✅</span> <div><strong>Dependencias:</strong> Sí, para vincular tareas.</div></li><li class="flex items-start gap-3"><span class="text-xl">✅</span> <div><strong>Vista de Cronograma (Gantt):</strong> Sí, para planificación visual.</div></li><li class="flex items-start gap-3"><span class="text-xl">✅</span> <div><strong>Hitos (Milestones):</strong> Sí, para marcar entregas clave.</div></li><li class="flex items-start gap-3"><span class="text-xl">✅</span> <div><strong>Línea Base (Baseline):</strong> Sí, para seguimiento profesional.</div></li></ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Conceptos -->
+        <section id="concepts" class="relative slide">
+            <div class="slide-header"><img src="logo_oscuro.png" alt="Logo SOFOFA" class="logo"></div>
+            <h2 class="text-4xl font-bold text-[#3D4B5C] mb-8 text-center">3. Conceptos Clave y Vistas Principales</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto w-full bg-white p-8 rounded-xl shadow-lg">
+                <div>
+                    <h3 class="text-2xl font-bold text-[#007BFF] mb-4 border-b-2 border-blue-200 pb-2">Vistas</h3>
+                    <ul class="space-y-3 text-lg">
+                        <li><strong>Cuadrícula:</strong> Formato tipo Excel.</li>
+                        <li><strong>Tablero:</strong> Estilo Kanban para flujos visuales.</li>
+                        <li><strong>Línea de Tiempo:</strong> Diagrama de Gantt interactivo.</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-2xl font-bold text-[#007BFF] mb-4 border-b-2 border-blue-200 pb-2">Conceptos</h3>
+                    <ul class="space-y-3 text-lg">
+                        <li><strong>Tareas / Subtareas:</strong> Acciones del proyecto.</li>
+                        <li><strong>Hitos (Milestones):</strong> Puntos de control sin duración.</li>
+                        <li><strong>Buckets (Depósitos):</strong> Agrupadores visuales.</li>
+                        <li><strong>Campos Personalizados:</strong> Columnas de información a medida.</li>
+                        <li><strong>Project Manager:</strong> Campo editable para el responsable.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Interfaces -->
+        <section id="interfaces" class="relative slide">
+            <div class="slide-header"><img src="logo_oscuro.png" alt="Logo SOFOFA" class="logo"></div>
+            <h2 class="text-4xl font-bold text-[#3D4B5C] mb-8 text-center">4. Explorando las Interfaces de Trabajo</h2>
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 max-w-6xl mx-auto w-full">
+                <!-- Cuadrícula -->
+                <div class="bg-white p-6 rounded-lg shadow-lg">
+                    <h3 class="text-xl font-bold mb-2">📋 Cuadrícula (Grid)</h3>
+                    <p class="mb-4">Ideal para ingresar y organizar tareas de forma masiva, como en una hoja de cálculo.</p>
+                    <div class="border rounded-lg p-2 bg-gray-50 text-sm">
+                        <div class="grid grid-cols-3 font-bold border-b pb-1"><div>Nombre</div><div>Asignado</div><div>Vence</div></div>
+                        <div class="grid grid-cols-3 pt-1"><div>Fase de Diseño</div><div>Ana</div><div>15/07</div></div>
+                        <div class="grid grid-cols-3 pt-1 text-gray-500 pl-4"><div>└ Bocetos</div><div>Ana</div><div>10/07</div></div>
+                    </div>
+                </div>
+                <!-- Tablero -->
+                <div class="bg-white p-6 rounded-lg shadow-lg">
+                    <h3 class="text-xl font-bold mb-2">🗂️ Tablero (Board)</h3>
+                    <p class="mb-4">Vista Kanban para visualizar el flujo de trabajo por columnas (Buckets).</p>
+                    <div class="flex gap-2 text-sm">
+                        <div class="bg-gray-100 p-2 rounded w-1/3"><strong>Por Hacer</strong><div class="bg-white p-1 mt-1 rounded shadow">Tarea 1</div></div>
+                        <div class="bg-gray-100 p-2 rounded w-1/3"><strong>En Progreso</strong><div class="bg-white p-1 mt-1 rounded shadow">Tarea 2</div></div>
+                        <div class="bg-gray-100 p-2 rounded w-1/3"><strong>Hecho</strong></div>
+                    </div>
+                </div>
+                <!-- Línea de Tiempo -->
+                <div class="bg-white p-6 rounded-lg shadow-lg">
+                    <h3 class="text-xl font-bold mb-2">📊 Línea de Tiempo (Gantt)</h3>
+                    <p class="mb-4">Diagrama que muestra la programación, duración y dependencias de las tareas.</p>
+                     <div class="space-y-2 text-sm">
+                        <div>Tarea A <div class="w-1/2 h-4 bg-[#007BFF] rounded"></div></div>
+                        <div>Tarea B <div class="ml-[50%] w-1/3 h-4 bg-[#007BFF] rounded"></div></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Ciclo de vida -->
+        <section id="lifecycle" class="relative slide">
+            <div class="slide-header"><img src="logo_oscuro.png" alt="Logo SOFOFA" class="logo"></div>
+            <h2 class="text-4xl font-bold text-[#3D4B5C] mb-8 text-center">5. Ciclo de Vida de un Proyecto (Caso Práctico)</h2>
+            <div class="max-w-3xl mx-auto space-y-4 w-full">
+                <div class="flex items-center gap-4 p-5 bg-white rounded-lg shadow"><div class="text-4xl font-black text-[#007BFF]">1</div><div><h4 class="font-bold">Crear Proyecto y Tareas</h4><p class="text-sm">Se inicia el proyecto "Lanzamiento Producto X" y se añaden tareas como 'Diseño' y 'Marketing'.</p></div></div>
+                <div class="text-center text-3xl text-[#007BFF]">↓</div>
+                <div class="flex items-center gap-4 p-5 bg-white rounded-lg shadow"><div class="text-4xl font-black text-[#007BFF]">2</div><div><h4 class="font-bold">Establecer Dependencias y Recursos</h4><p class="text-sm">Se vinculan tareas (ej: 'Producción' depende de 'Diseño') y se asignan responsables.</p></div></div>
+                <div class="text-center text-3xl text-[#007BFF]">↓</div>
+                <div class="flex items-center gap-4 p-5 bg-white rounded-lg shadow"><div class="text-4xl font-black text-[#007BFF]">3</div><div><h4 class="font-bold">¡Establecer la Línea Base!</h4><p class="text-sm">Se guarda una "fotografía" del plan original. Este es el paso más crítico para el control.</p></div></div>
+                <div class="text-center text-3xl text-[#007BFF]">↓</div>
+                <div class="flex items-center gap-4 p-5 bg-white rounded-lg shadow"><div class="text-4xl font-black text-[#007BFF]">4</div><div><h4 class="font-bold">Simular Avance y Visualizar</h4><p class="text-sm">Se actualiza el progreso y se analiza el impacto en la vista de Cronograma (Gantt).</p></div></div>
+            </div>
+        </section>
+
+        <!-- Línea Base -->
+        <section id="tracking" class="relative slide">
+             <div class="slide-header"><img src="logo_oscuro.png" alt="Logo SOFOFA" class="logo"></div>
+            <h2 class="text-4xl font-bold text-[#3D4B5C] mb-4 text-center">6. El Poder de la Línea Base: Plan vs. Realidad</h2>
+            <div class="max-w-4xl mx-auto w-full">
+                <p class="text-center text-lg text-gray-600 mb-6">La Línea Base es una "fotografía" del plan original del proyecto. Se establece una vez aprobado el cronograma y sirve como punto de comparación frente al avance real para identificar desviaciones en tiempo y alcance. Es la herramienta fundamental para el control profesional de proyectos.</p>
+                <div class="bg-white rounded-xl shadow-lg p-6">
+                    <div class="chart-container">
+                        <canvas id="trackingChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Buenas Prácticas -->
+        <section id="best-practices" class="relative slide">
+            <div class="slide-header"><img src="logo_oscuro.png" alt="Logo SOFOFA" class="logo"></div>
+            <h2 class="text-4xl font-bold text-[#3D4B5C] mb-8 text-center">7. Recomendaciones y Buenas Prácticas</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto w-full">
+                <div class="bg-white p-6 rounded-lg shadow"><strong>Definir tareas claras</strong> y realistas desde el inicio.</div>
+                <div class="bg-white p-6 rounded-lg shadow"><strong>Marcar hitos</strong> que representen verdaderos puntos de control o entregables clave.</div>
+                <div class="bg-white p-6 rounded-lg shadow"><strong>Generar dependencias</strong> cuando exista una relación lógica o secuencial.</div>
+                <div class="bg-white p-6 rounded-lg shadow"><strong>Usar campos personalizados</strong> relevantes, sin sobrecargar con información innecesaria.</div>
+                <div class="bg-white p-6 rounded-lg shadow"><strong>Utilizar buckets</strong> para clasificar tareas por fase, tipo de trabajo o área responsable.</div>
+                <div class="bg-white p-6 rounded-lg shadow"><strong>Establecer una Línea Base</strong> siempre antes de comenzar la ejecución del proyecto.</div>
+            </div>
+        </section>
+
+        <!-- Material de Apoyo -->
+        <section id="support" class="relative slide">
+             <div class="slide-header"><img src="logo_oscuro.png" alt="Logo SOFOFA" class="logo"></div>
+            <h2 class="text-4xl font-bold text-[#3D4B5C] mb-8 text-center">8. Material de Apoyo</h2>
+            <div class="max-w-2xl mx-auto w-full bg-white p-8 rounded-xl shadow-lg text-lg space-y-4">
+                 <p><a href="https://project.microsoft.com" target="_blank" class="text-[#007BFF] hover:underline"><strong>Acceso a Project for the Web</strong> - project.microsoft.com</a></p>
+                 <p><a href="https://learn.microsoft.com/es-es/project-for-the-web" target="_blank" class="text-[#007BFF] hover:underline"><strong>Documentación Oficial de Microsoft</strong> - learn.microsoft.com</a></p>
+                 <p><a href="https://www.youtube.com/playlist?list=PL5w5AT5LYYTSibTKmVxC7eAWrXgEXzs3" target="_blank" class="text-[#007BFF] hover:underline"><strong>Video Tutorial Recomendado</strong> - Playlist en YouTube</a></p>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        const defaultChartOptions = {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { position: 'bottom', labels: { font: { family: 'Inter' }, padding: 20 } },
+                tooltip: { backgroundColor: '#2D3748', titleFont: { weight: 'bold', family: 'Inter' }, bodyFont: { family: 'Inter' }, padding: 10, cornerRadius: 4 }
+            },
+            scales: {
+                y: { beginAtZero: true, ticks: { font: { family: 'Inter', color: '#3D4B5C' } } },
+                x: { ticks: { font: { family: 'Inter', color: '#3D4B5C' } } }
+            }
+        };
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const trackingCtx = document.getElementById('trackingChart')?.getContext('2d');
+            if (trackingCtx) {
+                new Chart(trackingCtx, {
+                    type: 'line',
+                    data: {
+                        labels: ['Semana 0', 'Semana 1', 'Semana 2', 'Semana 3', 'Semana 4', 'Semana 5'],
+                        datasets: [{
+                            label: 'Plan Original (Línea Base)',
+                            data: [0, 20, 40, 60, 80, 100],
+                            borderColor: '#A9A9A9', 
+                            backgroundColor: 'transparent',
+                            borderDash: [5, 5],
+                            tension: 0.1
+                        },{
+                            label: 'Progreso Real',
+                            data: [0, 15, 30, 55, 70, 95],
+                            borderColor: '#007BFF',
+                            backgroundColor: 'rgba(0, 123, 255, 0.1)',
+                            fill: true,
+                            tension: 0.4
+                        }]
+                    },
+                    options: {
+                        ...defaultChartOptions,
+                        scales: {
+                            y: { 
+                                max: 110,
+                                ticks: {
+                                    callback: function(value) { return value + "%" },
+                                    color: '#3D4B5C'
+                                }
+                            },
+                             x: { ticks: { color: '#3D4B5C' } }
+                        }
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
